@@ -670,7 +670,7 @@ module Signet
         request_env = request.to_env(options[:connection])
         request_env[:request] ||= request
         response = options[:connection].app.call(request_env)
-        if response.status.to_i == 200
+        if response.status.to_i == 200 || response.status.to_i == 201
           return ::Signet::OAuth1.parse_form_encoded_credentials(response.body)
         elsif [400, 401, 403].include?(response.status.to_i)
           message = 'Authorization failed.'
